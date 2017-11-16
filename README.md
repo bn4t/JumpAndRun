@@ -2,7 +2,7 @@
 
 ## Token
 #### Token name: `Pollen`
-#### Symbol: 
+#### Symbol: `℗`
 #### Nachkommastellen: `7`
 #### 
 
