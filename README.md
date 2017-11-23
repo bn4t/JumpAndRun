@@ -3,6 +3,11 @@
 ### Jump & Run
 
 - RPG dialogs
+- Player controlled movement vs. automatic movement
+- fixed camera angle
+- Coins
+- Multiple characters
+
 
 #
 
