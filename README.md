@@ -4,10 +4,12 @@
 
 - RPG dialogs
 - Player controlled movement vs. automatic movement
-- fixed camera angle
+- Fixed camera angle
 - Coins
 - Multiple characters
-
+- Start menu / End Screen / Game Over screen 
+- Highscore (playername)
+- ev. Story
 
 #
 
