@@ -18,20 +18,37 @@
     var myScore;
 
     function start() {
+        //creates new player and assigns the variable myGamePiece
         myGamePiece = new Component(30, 30, "gray", 10, 120);
+
+        //sets starting Gravity for the Game piece
         myGamePiece.gravity = 0.05;
+
+        //sets sizes for the component
         myScore = new Component("30px", "Consolas", "black", 280, 40, "text");
+
+        //starts the game
         myGameArea.start();
     }
 
     var myGameArea = {
         canvas: document.createElement("canvas"),
         start: function () {
+
+            //sets canvas size
             this.canvas.width = 700;
             this.canvas.height = 500;
+
+            //sets canavas context
             this.context = this.canvas.getContext("2d");
+
+
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+
+            //sets frame variable
             this.frameNo = 0;
+
+            //starts repeating task which executes the updateGameArea function every 20 ms
             this.interval = setInterval(updateGameArea, 20);
 
 
@@ -46,11 +63,14 @@
             });
 
         },
+
+        //clears the canvas
         clear: function () {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
     };
 
+    //updates the component's values (position, etc)
     function Component(width, height, color, x, y, type) {
         this.type = type;
         this.score = 0;
