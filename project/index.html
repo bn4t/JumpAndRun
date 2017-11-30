@@ -136,8 +136,7 @@
 
 
             //checks if the player crashes with the green thing
-            if ((playerRight >= obstacleLeft) && (playerBottom < obstacleTop) ||
-                ((playerTop > obstacleBottom ) && (playerRight >= obstacleLeft))) {
+            if ((playerRight >= obstacleLeft) && (playerBottom > obstacleTop)) {
                 crash = true;
             }
             return crash;
@@ -169,17 +168,16 @@
         myGameArea.frameNo += 1;
 
         //checks if we're at the first or if the 150 frame interval has passed
-        if (myGameArea.frameNo === 1 || everyInterval(150)) {
+        if (myGameArea.frameNo === 1 || everyInterval(15)) {
 
             //creates new obstacle every 150th frame
             x = myGameArea.canvas.width;
             minHeight = 20;
-            maxHeight = 200;
+            maxHeight = 100;
             height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
             minGap = 150;
             maxGap = 200;
             gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-            myObstacles.push(new Component(10, height, "green", x, 0));
             myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
         }
 
@@ -188,7 +186,6 @@
         for (var i = 0; i < myObstacles.length; i++) {
             myObstacles[i].x--;
             myObstacles[i].update();
-
 
             //remove obstacles from array list to prevent memory overflow
             if (myObstacles[i].x < -10) {
