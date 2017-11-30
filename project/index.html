@@ -129,15 +129,25 @@
             }
         }
 
+        //checks if pressed key is the space key
         if (myGameArea.key && myGameArea.key === 32) {
+            //accelerate
             accelerate(-0.5);
         } else if (!myGameArea.key) {
+            //decelerate
             accelerate(0.4);
         }
 
+        //clears game area
         myGameArea.clear();
+
+        //counts up frame nomber
         myGameArea.frameNo += 1;
+
+        //checks if we're at the first or if the 150 frame interval has passed
         if (myGameArea.frameNo === 1 || everyInterval(150)) {
+
+            //creates new obstacle every 150th frame
             x = myGameArea.canvas.width;
             minHeight = 20;
             maxHeight = 200;
@@ -148,15 +158,22 @@
             myObstacles.push(new Component(10, height, "green", x, 0));
             myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
         }
+
+
         for (var i = 0; i < myObstacles.length; i += 1) {
             myObstacles[i].x += -1;
             myObstacles[i].update();
         }
+
+        //update score text
         myScore.text = "SCORE: " + myGameArea.frameNo;
         myScore.update();
+
+        //set new position of player
         myGamePiece.newPos();
         myGamePiece.update();
     }
+
 
     function everyInterval(n) {
         return (myGameArea.frameNo / n) % 1 === 0;
