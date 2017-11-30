@@ -136,6 +136,8 @@
             var othertop = otherobj.y;
             var otherbottom = otherobj.y + (otherobj.height);
             var crash = true;
+
+            //checks if the player crashes with the green thing
             if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
                 crash = false;
             }
