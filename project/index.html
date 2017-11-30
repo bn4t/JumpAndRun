@@ -58,7 +58,7 @@
             });
 
             //register KeyUp listener
-            window.addEventListener('keyup', function (e) {
+            window.addEventListener('keyup', function () {
                 myGameArea.key = false;
             });
 
@@ -118,27 +118,27 @@
 
         //check if the cube is at the bottom of the canvas
         this.hitBottom = function () {
-            var rockbottom = myGameArea.canvas.height - this.height;
-            if (this.y > rockbottom) {
-                this.y = rockbottom;
+            var bottom = myGameArea.canvas.height - this.height;
+            if (this.y > bottom) {
+                this.y = bottom;
                 this.gravitySpeed = 0;
             }
         };
 
         //checks if the cube has crashed into an obstacle
-        this.crashWith = function (otherobj) {
-            var myleft = this.x;
-            var myright = this.x + (this.width);
-            var mytop = this.y;
-            var mybottom = this.y + (this.height);
-            var otherleft = otherobj.x;
-            var otherright = otherobj.x + (otherobj.width);
-            var othertop = otherobj.y;
-            var otherbottom = otherobj.y + (otherobj.height);
+        this.crashWith = function (obstacle) {
+            var myLeft = this.x;
+            var myRight = this.x + (this.width);
+            var myTop = this.y;
+            var myBottom = this.y + (this.height);
+            var otherLeft = obstacle.x;
+            var otherRight = obstacle.x + (obstacle.width);
+            var otherTop = obstacle.y;
+            var otherBottom = obstacle.y + (obstacle.height);
             var crash = true;
 
             //checks if the player crashes with the green thing
-            if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            if ((myBottom < otherTop) || (myTop > otherBottom) || (myRight < otherLeft) || (myLeft > otherRight)) {
                 crash = false;
             }
             return crash;
