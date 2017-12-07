@@ -196,13 +196,8 @@
     }
 
     function generateTerrain(x) {
-        var minHeight = 20;
-        var maxHeight = 20;
-        var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-        var minGap = 300;
-        var maxGap = 300;
-        var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-        myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
+        var height = 300;
+        myObstacles.push(new Component(10, height, "green", x, height));
     }
 
     function everyInterval(n) {
