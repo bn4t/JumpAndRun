@@ -122,6 +122,7 @@
             }
         };
 
+
         //checks if the cube has crashed into an obstacle
         this.crashWith = function (obstacle) {
             var myLeft = this.x;
@@ -133,7 +134,6 @@
             var otherTop = obstacle.y;
             var otherBottom = obstacle.y + (obstacle.height);
             var crash = true;
-
             //checks if the player crashes with the green thing
             if ((myBottom < otherTop) || (myTop > otherBottom) || (myRight < otherLeft) || (myLeft > otherRight)) {
                 crash = false;
@@ -174,7 +174,7 @@
         }
 
         //checks if we're at the first or if the 150 frame interval has passed
-        if (everyInterval(10)) {
+        if (everyInterval(5)) {
             //creates new obstacle every 150th frame
             x = myGameArea.canvas.width;
             generateTerrain(x);
@@ -195,8 +195,27 @@
         myGamePiece.update();
     }
 
+    var lastHeight = 0;
+    var pseudeRndmUsed = lastHeight = Math.floor((Math.random() * 50) + 300);
+
     function generateTerrain(x) {
-        var height = 300;
+
+        var height = 0;
+
+        if (pseudeRndmUsed > 20) {
+            var proposedLastHeight;
+            do {
+                proposedLastHeight = Math.floor((Math.random() * 100) + 300);
+            } while (((lastHeight - proposedLastHeight) > -20) && ((lastHeight - proposedLastHeight) < 20));
+
+            lastHeight = proposedLastHeight;
+
+            pseudeRndmUsed = Math.floor((Math.random() * 5) + 1);
+        } else {
+            height = lastHeight;
+            pseudeRndmUsed++;
+        }
+
         myObstacles.push(new Component(10, height, "green", x, height));
     }
 
