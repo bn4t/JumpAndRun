@@ -166,18 +166,18 @@
         //counts up frame nomber
         myGameArea.frameNo += 1;
 
+        if (myGameArea.frameNo === 1) {
+            for (i = 0; i < myGameArea.canvas.width; i++) {
+                generateTerrain(i);
+            }
+        }
+
         //checks if we're at the first or if the 150 frame interval has passed
-        if (myGameArea.frameNo === 1 || everyInterval(10)) {
+        if (everyInterval(10)) {
 
             //creates new obstacle every 150th frame
             x = myGameArea.canvas.width;
-            minHeight = 20;
-            maxHeight = 20;
-            height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-            minGap = 300;
-            maxGap = 300;
-            gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-            myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
+            generateTerrain(x);
         }
 
 
@@ -195,6 +195,15 @@
         myGamePiece.update();
     }
 
+    function generateTerrain(x) {
+        var minHeight = 20;
+        var maxHeight = 20;
+        var height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
+        var minGap = 300;
+        var maxGap = 300;
+        var gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
+        myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
+    }
 
     function everyInterval(n) {
         return (myGameArea.frameNo / n) % 1 === 0;
