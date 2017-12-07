@@ -118,11 +118,11 @@
         this.hitBottom = function () {
 
             for (var i = 0; i < myObstacles.length; i++) {
-                if (myObstacles[i].x === this.x) {
+                if ((myObstacles[i].x >= this.x) && (myObstacles[i].x <= this.x + 10)) {
 
                     var height = myObstacles[i].height -30;
 
-                    if (this.y >= height) {
+                    if (this.y > height) {
                         this.y = height;
                         this.gravitySpeed = 0;
                     }
@@ -232,6 +232,11 @@
         for (var i = 0; i < myObstacles.length; i += 1) {
             myObstacles[i].x += -1;
             myObstacles[i].update();
+
+            //remove obstacles from array list to prevent memory overflow
+            if (myObstacles[i].x < -10) {
+                myObstacles.splice(i, 1);
+            }
         }
 
         //update score text
