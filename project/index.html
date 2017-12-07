@@ -36,7 +36,7 @@
             this.canvas.width = 700;
             this.canvas.height = 500;
 
-            //sets canavas context
+            //sets canvas context
             this.context = this.canvas.getContext("2d");
 
 
@@ -47,6 +47,7 @@
 
             //starts repeating task which executes the updateGameArea function every 20 ms
             this.interval = setInterval(updateGameArea, 20);
+            this.Cubeinterval = setInterval(updateCube, 1);
 
 
             //register KeyDown listener
@@ -68,7 +69,6 @@
     };
 
 
-
     //updates the component's values (position, etc)
     function Component(width, height, color, x, y, type) {
         this.type = type;
@@ -81,6 +81,7 @@
         this.y = y;
         this.gravity = 0;
         this.gravitySpeed = 0;
+
 
         this.update = function () {
             ctx = myGameArea.context;
@@ -115,50 +116,97 @@
 
         //check if the cube is at the bottom of the canvas
         this.hitBottom = function () {
-            var bottom = myGameArea.canvas.height - this.height;
-            if (this.y > bottom) {
-                this.y = bottom;
-                this.gravitySpeed = 0;
+
+            for (var i = 0; i < myObstacles.length; i++) {
+                if (myObstacles[i].x === this.x) {
+
+                    var height = myObstacles[i].height - 30;
+
+                    if (this.y >= height) {
+                        this.y = height;
+                        this.gravitySpeed = 0;
+                    }
+                }
+
             }
+
         };
+
 
         //checks if the cube has crashed into an obstacle
         this.crashWith = function (obstacle) {
-            var playerLeft = this.x;
-            var playerRight = this.x + (this.width);
-            var playerTop = this.y;
-            var playerBottom = this.y + (this.height);
-            var obstacleLeft = obstacle.x;
-            var obstacleRight = obstacle.x + (obstacle.width);
-            var obstacleTop = obstacle.y;
-            var obstacleBottom = obstacle.y + (obstacle.height);
+            var myLeft = this.x;
+            var myRight = this.x + (this.width);
+            var myTop = this.y;
+            var myBottom = this.y + (this.height);
+            var otherLeft = obstacle.x;
+            var otherRight = obstacle.x + (obstacle.width);
+            var otherTop = obstacle.y;
+            var otherBottom = obstacle.y + (obstacle.height);
             var crash = false;
-
-
             //checks if the player crashes with the green thing
-            if ((playerRight >= obstacleLeft) && (playerBottom > obstacleTop)) {
-                crash = true;
+            if ((myBottom < otherTop) || (myTop > otherBottom) || (myRight < otherLeft) || (myLeft > otherRight)) {
+                crash = false;
             }
             return crash;
         }
     }
 
-    //updates Game Area [gets called every 20 ms]
-    function updateGameArea() {
-        var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-        for (i = 0; i < myObstacles.length; i++) {
-            if (myGamePiece.crashWith(myObstacles[i])) {
-                return;
-            }
-        }
+    var date = new Date();
+    var lastTime = date.getTime();
+
+
+    function updateCube() {
+
+
+        date = new Date();
 
         //checks if pressed key is the space key
         if (myGameArea.key && myGameArea.key === 32) {
-            //accelerate
-            accelerate(-0.5);
+
+            var passedTime = date.getTime() - lastTime;
+
+
+            /*if (passedTime < 300){
+                //accelerate
+                accelerate(-1.5);
+                myGameArea.key = false;
+                console.log("dj");
+
+            } else*/
+            if (passedTime > 300) {
+
+                applyGravity();
+                lastTime = date.getTime();
+            }
+
+
         } else if (!myGameArea.key) {
             //decelerate
             accelerate(0.4);
+        }
+    }
+
+
+    function applyGravity() {
+
+        //accelerate
+        accelerate(-2);
+
+        setTimeout(function () {
+            myGameArea.key = false;
+        }, 100);
+
+    }
+
+
+    //updates Game Area [gets called every 20 ms]
+    function updateGameArea() {
+        var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+        for (i = 0; i < myObstacles.length; i += 1) {
+            if (myGamePiece.crashWith(myObstacles[i])) {
+                return;
+            }
         }
 
         //clears game area
@@ -167,32 +215,24 @@
         //counts up frame nomber
         myGameArea.frameNo += 1;
 
-        //checks if we're at the first or if the 150 frame interval has passed
-        if (myGameArea.frameNo === 1 || everyInterval(15)) {
-
-            //creates new obstacle every 150th frame
-            x = myGameArea.canvas.width;
-            minHeight = 20;
-            maxHeight = 100;
-            height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-            minGap = 150;
-            maxGap = 200;
-            gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-            myObstacles.push(new Component(10, x - height - gap, "green", x, height + gap));
-        }
-
-
-        //move obstacles
-        for (var i = 0; i < myObstacles.length; i++) {
-            myObstacles[i].x--;
-            myObstacles[i].update();
-
-            //remove obstacles from array list to prevent memory overflow
-            if (myObstacles[i].x < -10) {
-                myObstacles.splice(i, 1);
+        if (myGameArea.frameNo === 1) {
+            for (i = 0; i < myGameArea.canvas.width; i++) {
+                height = 350;
+                myObstacles.push(new Component(10, height, "green", i, height));
             }
         }
 
+        //checks if we're at the first or if the 150 frame interval has passed
+        if (everyInterval(5)) {
+            //creates new obstacle every 150th frame
+            x = myGameArea.canvas.width;
+            generateTerrain(x);
+        }
+
+        for (var i = 0; i < myObstacles.length; i += 1) {
+            myObstacles[i].x += -1;
+            myObstacles[i].update();
+        }
 
         //update score text
         myScore.text = "SCORE: " + myGameArea.frameNo;
@@ -204,11 +244,38 @@
     }
 
 
+    var lastHeight = 0;
+    var pseudoRndmUsed = lastHeight = Math.floor((Math.random() * 50) + 300);
+
+    function generateTerrain(x) {
+
+        var height = 0;
+
+        if (pseudoRndmUsed > 20) {
+            var proposedLastHeight;
+            do {
+                proposedLastHeight = Math.floor((Math.random() * 100) + 300);
+            } while (((lastHeight - proposedLastHeight) > -20) && ((lastHeight - proposedLastHeight) < 20));
+
+            lastHeight = proposedLastHeight;
+
+            pseudoRndmUsed = Math.floor((Math.random() * 5) + 1);
+        } else {
+            height = lastHeight;
+            pseudoRndmUsed++;
+        }
+
+        myObstacles.push(new Component(10, height, "green", x, height));
+    }
+
+
     function everyInterval(n) {
         return (myGameArea.frameNo / n) % 1 === 0;
     }
 
+
     function accelerate(n) {
+
         myGamePiece.gravity = n;
     }
 </script>
