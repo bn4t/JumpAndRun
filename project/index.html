@@ -168,13 +168,13 @@
 
         if (myGameArea.frameNo === 1) {
             for (i = 0; i < myGameArea.canvas.width; i++) {
-                generateTerrain(i);
+                height = 350;
+                myObstacles.push(new Component(10, height, "green", i, height));
             }
         }
 
         //checks if we're at the first or if the 150 frame interval has passed
         if (everyInterval(10)) {
-
             //creates new obstacle every 150th frame
             x = myGameArea.canvas.width;
             generateTerrain(x);
