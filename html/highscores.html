@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/custom-css.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
-<body onLoad="document.getElementById('playername').focus();">
+<body onLoad="retrieveHighscores();">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#caff99;">
         <a class="navbar-brand bungee-font" href="http://aintit.fun">Jump 'n' Run</a>
@@ -35,18 +35,13 @@
 
 <div class="container">
 
-    <h1 class="bungee-font">Jump 'n' Run</h1>
+    <h1 class="bungee-font">Highscores</h1>
 
-    <div class="form-group input-group custom-form">
-        <input type="text" class="form-control form-control-lg" id="playername" required="true"
-               placeholder="Player name">
-        <span class="input-group-btn">
-                <button class="btn btn-primary btn-dark" type="button" onclick="redirectToGame()">Play</button>
-            </span>
-    </div>
+    <p>1. <a id="hscore1"></a></p>
+    <p>2. <a id="hscore2"></a></p>
+    <p>3. <a id="hscore3"></a></p>
 
 
-    <button type="button" class="btn btn-dark custom-btn" onclick="redirectToHighscores()">Highscores</button>
 </div>
 
 
@@ -58,30 +53,35 @@
 
 
 <script>
-    function redirectToGame() {
 
-        var name = document.getElementById("playername").value;
-        if (name !== "") {
-            createCookie("jnr-name", name, 1);
+    function retrieveHighscores() {
+        var highscores = readCookie("jnr-hscrs");
+        var highScoresArray = highscores.split(",");
 
-            window.location = "http://aintit.fun/play";
+        var hscore1;
+        var hscore2;
+        var hscore3;
+
+
+        highScoresArray[0] != null ? hscore1 = highScoresArray[0] : hscore1 = "Unknown";
+        highScoresArray[1] != null ? hscore2 = highScoresArray[1] : hscore2 = "Unknown";
+        highScoresArray[2] != null ? hscore3 = highScoresArray[2] : hscore3 = "Unknown";
+
+        document.getElementById("hscore1").innerHTML = hscore1;
+        document.getElementById("hscore2").innerHTML = hscore2;
+        document.getElementById("hscore3").innerHTML = hscore3;
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
         }
+        return null;
     }
-
-    function redirectToHighscores() {
-
-        window.location = "http://aintit.fun/highscores.html";
-    }
-
-    function createCookie(name, value, days) {
-
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toUTCString();
-
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
 
 </script>
 
