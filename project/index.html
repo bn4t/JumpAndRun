@@ -21,6 +21,8 @@
     var pseudoRndmUsed = lastHeight = Math.floor((Math.random() * 50) + 300);
     var date = new Date();
     var lastTime = date.getTime();
+    var onGround = false;
+    var allowDoubleJump = true;
 
     function start() {
         //creates new player and assigns the variable myGamePiece
@@ -130,10 +132,12 @@
 
 
                     if (this.y > height) {
+
                         //prevent the player from glitching to the top of the canvas
                         if (height > 10) {
                             this.y = height;
                             this.gravitySpeed = 0;
+                            onGround = true;
                         }
                     }
 
@@ -169,23 +173,24 @@
         date = new Date();
 
         //checks if pressed key is the space key
-        if (myGameArea.key && myGameArea.key === 32) {
+        if (myGameArea.key === 32) {
 
             var passedTime = date.getTime() - lastTime;
 
-
-            /*if (passedTime < 300){
-                //accelerate
-                accelerate(-1.5);
-                myGameArea.key = false;
-                console.log("dj");
-
-            } else*/
-            if (passedTime > 500) {
+            if (onGround) {
+                onGround = false;
                 applyGravity();
                 lastTime = date.getTime();
+                allowDoubleJump = true;
             }
+            /*else if (allowDoubleJump && passedTime > 300){
 
+                           console.log("dj");
+
+                           applyGravity();
+                           lastTime = date.getTime();
+                           allowDoubleJump = false;
+                       }*/
 
         } else if (!myGameArea.key) {
             //decelerate
