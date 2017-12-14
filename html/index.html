@@ -5,41 +5,66 @@
     <title>Title</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/custom-css.css">
-    <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,500|Roboto:400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
 <body>
-
 <header>
-    <h1>Welcome to our Jump'n Run</h1>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#caff99;">
+        <a class="navbar-brand bungee-font" href="#">Jump 'n' Run</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 </header>
+<div id="wrap">
+    <div class="content" id="main">
 
-<div class="content">
+    </div>
+</div>
 
-    <p>
-        <button type="button" class="btn btn-dark custom-btn" onclick="redirectToGame()">Start</button>
-    </p>
 
-    <p>
-        <button type="button" class="btn btn-dark custom-btn">Highscore</button>
-    </p>
+<div class="container">
+
+    <h1 class="bungee-font">Jump 'n' Run</h1>
+
+    <div class="form-group input-group custom-form">
+        <input type="text" class="form-control form-control-lg" id="notename" required="true" placeholder="Player name">
+        <span class="input-group-btn">
+                <button class="btn btn-primary btn-dark" id="load" type="button">Play</button>
+            </span>
+    </div>
+
+
+    <button type="button" class="btn btn-dark custom-btn">Highscores</button>
+
 
 </div>
 
 
-<footer>
-    <h5>
-        Projekt: YAAASSS von Marina, Benjamin und Dylan
+<div class="footer" style="background-color:#caff99;">
 
-    </h5>
-</footer>
+    <p class="footer-text">Projekt: YAAASSS von Marina, Benjamin und Dylan</p>
+
+</div>
 
 
 <script>
-
     function redirectToGame() {
         window.location = "http://aintit.fun/play";
     }
-
 </script>
 
 </body>
