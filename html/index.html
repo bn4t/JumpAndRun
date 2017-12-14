@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/custom-css.css">
     <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,500|Roboto:400,500" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
@@ -17,9 +16,7 @@
 <div class="content">
 
     <p>
-        <button type="button" class="btn btn-dark custom-btn" onclick='function redirect(){
-            window.location = "http://aintit.fun/play";}'>Start
-        </button>
+        <button type="button" class="btn btn-dark custom-btn" onclick="redirectToGame()">Start</button>
     </p>
 
     <p>
@@ -35,6 +32,15 @@
 
     </h5>
 </footer>
+
+
+<script>
+
+    function redirectToGame() {
+        window.location = "http://aintit.fun/play";
+    }
+
+</script>
 
 </body>
 </html>
