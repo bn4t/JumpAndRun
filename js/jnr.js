@@ -8,6 +8,10 @@ var lastTime = date.getTime();
 var onGround = false;
 var allowDoubleJump = true;
 
+
+/**
+ * Starts the whole game.
+ **/
 function start() {
     //creates new player and assigns the variable myGamePiece
     myGamePiece = new Component(30, 30, "gray", 20, 120);
@@ -16,13 +20,14 @@ function start() {
     myScore = new Component("30px", "Consolas", "black", 280, 40, "text");
 
     //starts the game
-    myGameArea.start();
+    gameArea.start();
 
+    //set focus to the canvas
     document.getElementById('playground').focus();
 }
 
 
-var myGameArea = {
+var gameArea = {
     canvas: document.getElementById("playground"),
 
     start: function () {
@@ -39,18 +44,20 @@ var myGameArea = {
         this.frameNo = 0;
 
         //starts repeating task which executes the updateGameArea function every 20 ms
+        // noinspection JSUnusedGlobalSymbols
         this.interval = setInterval(updateGameArea, 20);
+        // noinspection JSUnusedGlobalSymbols
         this.Cubeinterval = setInterval(updateCube, 1);
 
 
         //register KeyDown listener
         window.addEventListener('keydown', function (e) {
-            myGameArea.key = e.keyCode;
+            gameArea.key = e.keyCode;
         });
 
         //register KeyUp listener
         window.addEventListener('keyup', function () {
-            myGameArea.key = false;
+            gameArea.key = false;
         });
     },
 
@@ -73,7 +80,6 @@ var myGameArea = {
  **/
 function Component(width, height, color, x, y, type) {
     this.type = type;
-    this.score = 0;
     this.width = width;
     this.height = height;
     this.speedX = 0;
@@ -85,7 +91,7 @@ function Component(width, height, color, x, y, type) {
 
 
     this.update = function () {
-        var ctx = myGameArea.context;
+        var ctx = gameArea.context;
         if (this.type === "text") {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
@@ -95,6 +101,7 @@ function Component(width, height, color, x, y, type) {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     };
+
 
     //sets the new position of the cube
     this.newPos = function () {
@@ -124,7 +131,6 @@ function Component(width, height, color, x, y, type) {
 
                 var height = myObstacles[i].height - 30;
 
-
                 if (this.y > height) {
 
                     //prevent the player from glitching to the top of the canvas
@@ -134,12 +140,8 @@ function Component(width, height, color, x, y, type) {
                         onGround = true;
                     }
                 }
-
-
             }
-
         }
-
     };
 
 
@@ -156,8 +158,6 @@ function Component(width, height, color, x, y, type) {
         var crash = false;
 
         if (otherTop !== 0) {
-
-
 
             //checks if the player crashes with the green thing
             if ((myBottom > otherTop) /*&& (myRight > otherLeft) /*|| (myLeft >= otherRight)*/) {
@@ -176,7 +176,7 @@ function updateCube() {
     date = new Date();
 
     //checks if pressed key is the space key
-    if (myGameArea.key === 32) {
+    if (gameArea.key === 32) {
 
         var passedTime = date.getTime() - lastTime;
 
@@ -193,9 +193,9 @@ function updateCube() {
                        applyGravity();
                        lastTime = date.getTime();
                        allowDoubleJump = false;
-                   }*/
+          }*/
 
-    } else if (!myGameArea.key) {
+    } else if (!gameArea.key) {
         //decelerate
         accelerate(0.4);
     }
@@ -210,7 +210,7 @@ function applyGravity() {
     accelerate(-1);
 
     setTimeout(function () {
-        myGameArea.key = false;
+        gameArea.key = false;
     }, 150);
 }
 
@@ -227,13 +227,13 @@ function updateGameArea() {
     }
 
     //clears game area
-    myGameArea.clear();
+    gameArea.clear();
 
     //counts up frame nomber
-    myGameArea.frameNo += 1;
+    gameArea.frameNo += 1;
 
-    if (myGameArea.frameNo === 1) {
-        for (i = 0; i < myGameArea.canvas.width; i++) {
+    if (gameArea.frameNo === 1) {
+        for (i = 0; i < gameArea.canvas.width; i++) {
             height = 350;
             myObstacles.push(new Component(10, height, "green", i, height));
         }
@@ -242,7 +242,7 @@ function updateGameArea() {
     //checks if we're at the first or if the 5 frame interval has passed
     if (everyInterval(5)) {
         //creates new obstacle every 5th frame
-        x = myGameArea.canvas.width;
+        x = gameArea.canvas.width;
         generateTerrain(x);
     }
 
@@ -257,13 +257,14 @@ function updateGameArea() {
     }
 
     //update score text
-    myScore.text = "SCORE: " + Math.round(myGameArea.frameNo / 10);
+    myScore.text = "SCORE: " + Math.round(gameArea.frameNo / 10);
     myScore.update();
 
     //set new position of player
     myGamePiece.newPos();
     myGamePiece.update();
 }
+
 
 /**
  * Generates the terrain.
@@ -291,22 +292,22 @@ function generateTerrain(x) {
     myObstacles.push(new Component(10, height, "green", x, height));
 }
 
+
 /**
  * Checks if an interval is currently active.
  *
- * @returns Returns a boolean which reflects if the interval is true
+ * @returns boolean a boolean which reflects if the interval is true
  **/
 function everyInterval(n) {
-    return (myGameArea.frameNo / n) % 1 === 0;
+    return (gameArea.frameNo / n) % 1 === 0;
 }
 
 
 /**
  * Sets the cube's gravity
  *
- * @param n amount of gravity to be set
- * */
-function accelerate(n) {
-
-    myGamePiece.gravity = n;
+ * @param newGravity amount of gravity to be set
+ **/
+function accelerate(newGravity) {
+    myGamePiece.gravity = newGravity;
 }
