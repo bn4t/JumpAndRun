@@ -56,20 +56,29 @@
 
     function retrieveHighscores() {
         var highscores = readCookie("jnr-hscrs");
-        var highScoresArray = highscores.split(",");
 
-        var hscore1;
-        var hscore2;
-        var hscore3;
+        if (highscores != null) {
+            var highScoresArray = highscores.split(",");
 
 
-        highScoresArray[0] != null ? hscore1 = highScoresArray[0] : hscore1 = "Unknown";
-        highScoresArray[1] != null ? hscore2 = highScoresArray[1] : hscore2 = "Unknown";
-        highScoresArray[2] != null ? hscore3 = highScoresArray[2] : hscore3 = "Unknown";
+            for (i = 0; i < 3; i++) {
 
-        document.getElementById("hscore1").innerHTML = hscore1;
-        document.getElementById("hscore2").innerHTML = hscore2;
-        document.getElementById("hscore3").innerHTML = hscore3;
+                if (highScoresArray[i] != null) {
+                    document.getElementById("hscore" + (i + 1)).innerHTML = highScoresArray[i];
+                } else {
+                    document.getElementById("hscore" + (i + 1)).innerHTML = "Unknown";
+                }
+            }
+
+
+        } else {
+            for (var i = 0; i < 3; i++) {
+                document.getElementById("hscore" + (i + 1)).innerHTML = "Unknown";
+            }
+        }
+
+
+
     }
 
     function readCookie(name) {

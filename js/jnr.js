@@ -1,23 +1,25 @@
-var myGamePiece;
+var gameComponent;
 var myObstacles = [];
-var myScore;
+var score;
 var lastHeight = 0;
 var pseudoRndmUsed = lastHeight = Math.floor((Math.random() * 50) + 300);
 var date = new Date();
 var lastTime = date.getTime();
 var onGround = false;
 var allowDoubleJump = true;
+var interval;
+var cubeInterval;
 
 
 /**
  * Starts the whole game.
  **/
 function start() {
-    //creates new player and assigns the variable myGamePiece
-    myGamePiece = new Component(30, 30, "gray", 20, 120);
+    //creates new player and assigns the variable gameComponent
+    gameComponent = new Component(30, 30, "#90EE90", 20, 120);
 
     //sets sizes for the component
-    myScore = new Component("30px", "Consolas", "black", 280, 40, "text");
+    score = new Component("30px", "Bungee", "black", 300, 40, "text");
 
     //starts the game
     gameArea.start();
@@ -45,9 +47,9 @@ var gameArea = {
 
         //starts repeating task which executes the updateGameArea function every 20 ms
         // noinspection JSUnusedGlobalSymbols
-        this.interval = setInterval(updateGameArea, 20);
+        interval = setInterval(updateGameArea, 20);
         // noinspection JSUnusedGlobalSymbols
-        this.Cubeinterval = setInterval(updateCube, 1);
+        cubeInterval = setInterval(updateCube, 1);
 
 
         //register KeyDown listener
@@ -127,7 +129,7 @@ function Component(width, height, color, x, y, type) {
 
         for (var i = 0; i < myObstacles.length; i++) {
             //30 for the size of the cube
-            if ((myObstacles[i].x >= this.x && (myObstacles[i].x <= this.x + 30))) {
+            if ((myObstacles[i].x > this.x && (myObstacles[i].x < this.x + 30))) {
 
                 var height = myObstacles[i].height - 30;
 
@@ -146,23 +148,25 @@ function Component(width, height, color, x, y, type) {
 
 
     //checks if the cube has crashed into an obstacle
-    this.crashWith = function (obstacle) {
-        var myLeft = this.x;
-        var myRight = this.x + (this.width);
-        var myTop = this.y;
-        var myBottom = this.y + (this.height);
-        var otherLeft = obstacle.x;
-        var otherRight = obstacle.x + (obstacle.width);
-        var otherTop = myObstacles[0].y;
-        var otherBottom = obstacle.y + (obstacle.height);
+    this.crashWith = function () {
+
         var crash = false;
 
-        if (otherTop !== 0) {
+        for (var i = 0; i < myObstacles.length; i++) {
+            if ((myObstacles[i].x >= this.x) && (myObstacles[i].x <= this.x + 30)) {
 
-            //checks if the player crashes with the green thing
-            if ((myBottom > otherTop) /*&& (myRight > otherLeft) /*|| (myLeft >= otherRight)*/) {
-                console.log(myBottom + " | " + otherTop);
-                crash = true;
+                var obstacleLeft = myObstacles[i].x;
+                var obstacleTop = myObstacles[i].y;
+                var componentRight = this.x + 30;
+                var componentBottom = this.y + (this.height);
+
+                if (obstacleTop !== 0 && myObstacles[i] !== null) {
+
+                    //checks if the player crashes with the obstacle
+                    if ((componentBottom > obstacleTop) && (componentRight === obstacleLeft)) {
+                        crash = true;
+                    }
+                }
             }
         }
         return crash;
@@ -220,11 +224,12 @@ function applyGravity() {
  **/
 function updateGameArea() {
     var x, height;
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
-            return;
-        }
+
+    if (gameComponent.crashWith()) {
+        crash();
+        return;
     }
+
 
     //clears game area
     gameArea.clear();
@@ -235,7 +240,7 @@ function updateGameArea() {
     if (gameArea.frameNo === 1) {
         for (i = 0; i < gameArea.canvas.width; i++) {
             height = 350;
-            myObstacles.push(new Component(10, height, "green", i, height));
+            myObstacles.push(new Component(10, height, "gray", i, height));
         }
     }
 
@@ -257,12 +262,12 @@ function updateGameArea() {
     }
 
     //update score text
-    myScore.text = "SCORE: " + Math.round(gameArea.frameNo / 10);
-    myScore.update();
+    score.text = "SCORE: " + Math.round(gameArea.frameNo / 10);
+    score.update();
 
     //set new position of player
-    myGamePiece.newPos();
-    myGamePiece.update();
+    gameComponent.newPos();
+    gameComponent.update();
 }
 
 
@@ -289,7 +294,7 @@ function generateTerrain(x) {
         pseudoRndmUsed++;
     }
 
-    myObstacles.push(new Component(10, height, "green", x, height));
+    myObstacles.push(new Component(10, height, "gray", x, height));
 }
 
 
@@ -309,5 +314,102 @@ function everyInterval(n) {
  * @param newGravity amount of gravity to be set
  **/
 function accelerate(newGravity) {
-    myGamePiece.gravity = newGravity;
+    gameComponent.gravity = newGravity;
+}
+
+/**
+ * Executes the crash functions
+ **/
+function crash() {
+    clearInterval(interval);
+    clearInterval(cubeInterval);
+
+    var canvas = gameArea.canvas;
+
+    var ctx = canvas.getContext("2d");
+
+
+    var img = document.createElement('img');
+    img.src = '../blood.png';
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+
+        ctx.font = "80px Bungee";
+        ctx.textAlign = "center";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 7;
+        ctx.lineWidth = 5;
+        ctx.strokeText("You died!", canvas.width / 2 + 5, canvas.height / 2 - 5);
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = "black";
+        ctx.fillText("You died!", canvas.width / 2, canvas.height / 2);
+
+        ctx.font = "40px Bungee";
+        ctx.fillText(score.text, canvas.width / 2, canvas.height / 2 + 70);
+
+    };
+
+    setHighscoreCookie();
+
+}
+
+
+function setHighscoreCookie() {
+
+
+    var highscores = readCookie("jnr-hscrs");
+
+
+    if (highscores != null) {
+
+        var highScoresArray = highscores.split(",");
+
+        var hscore1 = Math.max.apply(Math, highscores);
+        highScoresArray.splice(highScoresArray.indexOf(hscore1), 1); // remove max from the array
+
+        var hscore2 = Math.max.apply(Math, highscores);
+        highScoresArray.splice(highScoresArray.indexOf(hscore2), 1); // remove max from the array
+
+        var hscore3 = Math.max.apply(Math, highscores);
+        highScoresArray.splice(highScoresArray.indexOf(hscore3), 1); // remove max from the array
+
+        var scoreDigits = score.text.match(/\d+/)[0];
+
+        if (scoreDigits > hscore1) {
+            hscore1 = scoreDigits;
+        } else if (scoreDigits > hscore2) {
+            hscore2 = scoreDigits;
+        } else if (scoreDigits > hscore3) {
+            hscore3 = scoreDigits;
+        }
+
+
+        createCookie("jnr-hscr", hscore1 + "," + hscore2 + "," + hscore3, 1000)
+
+
+    } else {
+        createCookie("jnr-hscr", "0,0,0", 100);
+    }
+}
+
+function createCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 }
