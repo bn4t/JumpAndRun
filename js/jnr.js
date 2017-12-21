@@ -21,8 +21,10 @@ function start() {
     document.getElementById('playground').focus();
 }
 
+
 var myGameArea = {
     canvas: document.getElementById("playground"),
+
     start: function () {
 
         //sets canvas size
@@ -50,7 +52,6 @@ var myGameArea = {
         window.addEventListener('keyup', function () {
             myGameArea.key = false;
         });
-
     },
 
     //clears the canvas
@@ -60,7 +61,16 @@ var myGameArea = {
 };
 
 
-//updates the component's values (position, etc)
+/**
+ * Updates the Component
+ *
+ * @param type
+ * @param y Y spawn point of the component
+ * @param x X spawn point of the component
+ * @param color Desired Color of the Component
+ * @param height Desired height of the Component
+ * @param width Desired width of the component
+ **/
 function Component(width, height, color, x, y, type) {
     this.type = type;
     this.score = 0;
@@ -159,7 +169,9 @@ function Component(width, height, color, x, y, type) {
     }
 }
 
-
+/**
+ * Updates the Cubes gravity.
+ **/
 function updateCube() {
     date = new Date();
 
@@ -189,7 +201,9 @@ function updateCube() {
     }
 }
 
-
+/**
+ * Applies gravity to the cube
+ **/
 function applyGravity() {
 
     //accelerate
@@ -198,11 +212,12 @@ function applyGravity() {
     setTimeout(function () {
         myGameArea.key = false;
     }, 150);
-
 }
 
 
-//updates Game Area [gets called every 20 ms]
+/**
+ * Updates the game area.
+ **/
 function updateGameArea() {
     var x, height;
     for (i = 0; i < myObstacles.length; i += 1) {
@@ -250,7 +265,11 @@ function updateGameArea() {
     myGamePiece.update();
 }
 
-
+/**
+ * Generates the terrain.
+ *
+ * @param x sets the x parameter of the generated terrain
+ **/
 function generateTerrain(x) {
 
     var height = 0;
@@ -272,12 +291,21 @@ function generateTerrain(x) {
     myObstacles.push(new Component(10, height, "green", x, height));
 }
 
-
+/**
+ * Checks if an interval is currently active.
+ *
+ * @returns Returns a boolean which reflects if the interval is true
+ **/
 function everyInterval(n) {
     return (myGameArea.frameNo / n) % 1 === 0;
 }
 
 
+/**
+ * Sets the cube's gravity
+ *
+ * @param n amount of gravity to be set
+ * */
 function accelerate(n) {
 
     myGamePiece.gravity = n;
