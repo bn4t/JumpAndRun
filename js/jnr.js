@@ -242,7 +242,7 @@ function updateGameArea() {
     //clears game area
     gameArea.clear();
 
-    //counts up frame nomber
+    //counts up frame number
     gameArea.frameNo += 1;
 
     if (gameArea.frameNo === 1) {
