@@ -35,18 +35,6 @@
 
 <div class="container">
 
-    <h1 class="bungee-font">Jump 'n' Run</h1>
-
-    <div class="form-group input-group custom-form">
-        <input type="text" class="form-control form-control-lg" id="playername" required="true"
-               placeholder="Player name">
-        <span class="input-group-btn">
-                <button class="btn btn-primary btn-dark" type="button" onclick="redirectToGame()">Play</button>
-            </span>
-    </div>
-
-
-    <button type="button" class="btn btn-dark custom-btn" onclick="redirectToHighscores()">Highscores</button>
 </div>
 
 
@@ -57,33 +45,6 @@
 </div>
 
 
-<script>
-    function redirectToGame() {
-
-        var name = document.getElementById("playername").value;
-        if (name !== "") {
-            createCookie("jnr-name", name, 1);
-
-            window.location = "play";
-        }
-    }
-
-    function redirectToHighscores() {
-
-        window.location = "highscores.html";
-    }
-
-    function createCookie(name, value, days) {
-
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toUTCString();
-
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-
-</script>
 
 <script src="js/util.js"></script>
 

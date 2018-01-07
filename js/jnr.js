@@ -403,7 +403,7 @@ function sortNumber(a, b) {
     return b - a;
 }
 
-
+/*
 function createCookie(name, value, days) {
     var expires = "";
     if (days) {
@@ -423,4 +423,4 @@ function readCookie(name) {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
-}
+}*/
