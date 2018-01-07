@@ -19,13 +19,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://apply55gx.github.io/Runner/">Home</a>
+                    <a class="nav-link" href="#" onclick="redirectToHome()">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="highscores.html">Highscores</a>
+                    <a class="nav-link" href="#" onclick="redirectToHighscores()">Highscores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
+                    <a class="nav-link" href="#" onclick="redirectToAbout()">About</a>
                 </li>
             </ul>
         </div>
@@ -49,34 +49,7 @@
 
 </div>
 
-
-<script>
-    function redirectToGame() {
-
-        var name = document.getElementById("playername").value;
-        if (name !== "") {
-            createCookie("jnr-name", name, 1);
-
-            window.location = "play";
-        }
-    }
-
-    function redirectToHighscores() {
-
-        window.location = "highscores.html";
-    }
-
-    function createCookie(name, value, days) {
-
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toUTCString();
-
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-
-</script>
-
+//Utils script
+<script src="js/util.js"></script>
 </body>
 </html>
