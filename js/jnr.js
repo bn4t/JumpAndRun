@@ -15,6 +15,8 @@ var cubeInterval;
  * Starts the whole game.
  **/
 function start() {
+    var highscores = readCookie("jnr-hscrs");
+
     //creates new player and assigns the variable gameComponent
     gameComponent = new Component(30, 30, "#90EE90", 20, 120);
 
@@ -26,6 +28,12 @@ function start() {
 
     //set focus to the canvas
     document.getElementById('playground').focus();
+
+
+    if (highscores === null) {
+        createCookie("jnr-hscrs", "0,0,0", 1000);
+    }
+
 }
 
 
@@ -256,8 +264,10 @@ function updateGameArea() {
         myObstacles[i].update();
 
         //remove obstacles from array list to prevent memory overflow
-        if (myObstacles[i].x < -10) {
+        if (myObstacles[i].x < -15) {
             myObstacles.splice(i, 1);
+
+            myObstacles.sort();
         }
     }
 
@@ -361,37 +371,37 @@ function setHighscoreCookie() {
     var highscores = readCookie("jnr-hscrs");
 
 
+
     if (highscores != null) {
 
         var highScoresArray = highscores.split(",");
 
-        var hscore1 = Math.max.apply(Math, highscores);
-        highScoresArray.splice(highScoresArray.indexOf(hscore1), 1); // remove max from the array
-
-        var hscore2 = Math.max.apply(Math, highscores);
-        highScoresArray.splice(highScoresArray.indexOf(hscore2), 1); // remove max from the array
-
-        var hscore3 = Math.max.apply(Math, highscores);
-        highScoresArray.splice(highScoresArray.indexOf(hscore3), 1); // remove max from the array
-
         var scoreDigits = score.text.match(/\d+/)[0];
 
-        if (scoreDigits > hscore1) {
-            hscore1 = scoreDigits;
-        } else if (scoreDigits > hscore2) {
-            hscore2 = scoreDigits;
-        } else if (scoreDigits > hscore3) {
-            hscore3 = scoreDigits;
-        }
+        highScoresArray.push(scoreDigits);
 
 
-        createCookie("jnr-hscr", hscore1 + "," + hscore2 + "," + hscore3, 1000)
+        highScoresArray.sort(sortNumber);
+
+        highScoresArray.splice(3, 1);
+
+
+        console.log(highScoresArray);
+
+
+        createCookie("jnr-hscrs", highScoresArray[0] + "," + highScoresArray[1] + "," + highScoresArray[2], 1000)
 
 
     } else {
-        createCookie("jnr-hscr", "0,0,0", 100);
+        createCookie("jnr-hscrs", "0,0,0", 1000);
     }
 }
+
+
+function sortNumber(a, b) {
+    return b - a;
+}
+
 
 function createCookie(name, value, days) {
     var expires = "";
