@@ -2,21 +2,26 @@
 
 ### Jump & Run
 
-- RPG dialogs
-- Player controlled movement vs. automatic movement
+- ~~RPG dialogs~~
+- ~~Player controlled movement vs. automatic movement~~
 - Fixed camera angle
-- Coins
-- Multiple characters
+- ~~Coins~~
+- ~~Multiple characters~~
 - Start menu / End Screen / Game Over screen 
 - Highscore (playername)
-- ev. Story
+- ~~ev. Story~~
 - horizontal movement (left-to-right)
 - background sounds/music
 - bouncing
 
-#
+---
+## TODO:
+- [ ] Names on Highscore page
+- [ ] Fix weird jumping glitch
+- [ ] sounds
 
-Freigabe Link, Google Drive: https://drive.google.com/open?id=13hTl4B9w3jIo46_EF9EuZ1ZEFw-gKF-Q
+---
+
+Freigabe Link: [Google Drive](https://drive.google.com/open?id=13hTl4B9w3jIo46_EF9EuZ1ZEFw-gKF-Q)
 
 
-https://www.w3schools.com/graphics/game_intro.asp
