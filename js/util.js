@@ -37,3 +37,7 @@ function readCookie(name) {
     }
     return null;
 }
+
+function sortNumber(a, b) {
+    return b - a;
+}

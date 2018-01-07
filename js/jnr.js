@@ -337,7 +337,6 @@ function crash() {
 
     var ctx = canvas.getContext("2d");
 
-
     var img = document.createElement('img');
     img.src = '../blood.png';
     img.onload = function () {
@@ -399,9 +398,7 @@ function setHighscoreCookie() {
 }
 
 
-function sortNumber(a, b) {
-    return b - a;
-}
+
 
 
 
