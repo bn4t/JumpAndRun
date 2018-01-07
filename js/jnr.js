@@ -15,7 +15,6 @@ var cubeInterval;
  * Starts the whole game.
  **/
 function start() {
-    var highscores = readCookie("jnr-hscrs");
 
     //creates new player and assigns the variable gameComponent
     gameComponent = new Component(30, 30, "#90EE90", 20, 120);
@@ -30,6 +29,8 @@ function start() {
     document.getElementById('playground').focus();
 
 
+    //check if highscores cookie already exists
+    var highscores = readCookie("jnr-hscrs");
     if (highscores === null) {
         createCookie("jnr-hscrs", "0,0,0", 1000);
     }
@@ -54,9 +55,7 @@ var gameArea = {
         this.frameNo = 0;
 
         //starts repeating task which executes the updateGameArea function every 20 ms
-        // noinspection JSUnusedGlobalSymbols
         interval = setInterval(updateGameArea, 20);
-        // noinspection JSUnusedGlobalSymbols
         cubeInterval = setInterval(updateCube, 1);
 
 
@@ -364,14 +363,16 @@ function crash() {
 
 }
 
-
+/**
+ * Sets the updated Highscores cookie
+ **/
 function setHighscoreCookie() {
 
 
+    //read cookie
     var highscores = readCookie("jnr-hscrs");
 
-
-
+    //if cookie exists read out values and fill in the updated values
     if (highscores != null) {
 
         var highScoresArray = highscores.split(",");
