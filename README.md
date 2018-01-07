@@ -16,7 +16,6 @@
 
 ---
 ## TODO:
-- [ ] Names on Highscore page
 - [ ] Fix weird jumping glitch
 - [ ] sounds
 
