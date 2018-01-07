@@ -12,15 +12,10 @@ body {
     margin-bottom: 60px;
 }
 
-.custom-start-btn {
-    margin: 50px;
-!important;
-    width: 150px;
-!important;
-}
+
 
 .custom-btn {
-    margin: 50px;
+    margin: 10px;
 }
 
 .container {
