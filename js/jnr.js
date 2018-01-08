@@ -30,8 +30,7 @@ function start() {
 
 
     //check if highscores cookie already exists
-    var highscores = readCookie("jnr-hscrs");
-    if (highscores === null) {
+    if (readCookie("jnr-hscrs") === null) {
         createCookie("jnr-hscrs", "0,0,0", 1000);
     }
 
@@ -197,15 +196,6 @@ function updateCube() {
             lastTime = date.getTime();
             allowDoubleJump = true;
         }
-        /*else if (allowDoubleJump && passedTime > 300){
-
-                       console.log("dj");
-
-                       applyGravity();
-                       lastTime = date.getTime();
-                       allowDoubleJump = false;
-          }*/
-
     } else if (!gameArea.key) {
         //decelerate
         accelerate(0.4);
@@ -283,7 +273,7 @@ function updateGameArea() {
 /**
  * Generates the terrain.
  *
- * @param x sets the x parameter of the generated terrain
+ * @param x sets the x location of the generated terrain
  **/
 function generateTerrain(x) {
 
@@ -330,16 +320,19 @@ function accelerate(newGravity) {
  * Executes the crash functions
  **/
 function crash() {
+
+    //cancel all intervals
     clearInterval(interval);
     clearInterval(cubeInterval);
 
     var canvas = gameArea.canvas;
-
     var ctx = canvas.getContext("2d");
-
     var img = document.createElement('img');
     img.src = '../blood.png';
+
+    //execute as soon the image is loaded
     img.onload = function () {
+        //draw the image
         ctx.drawImage(img, 0, 0);
 
         ctx.font = "80px Bungee";
@@ -353,13 +346,11 @@ function crash() {
         ctx.fillStyle = "black";
         ctx.fillText("You died!", canvas.width / 2, canvas.height / 2);
 
+        //show score text
         ctx.font = "40px Bungee";
         ctx.fillText(score.text, canvas.width / 2, canvas.height / 2 + 70);
-
     };
-
     setHighscoreCookie();
-
 }
 
 /**
@@ -367,38 +358,30 @@ function crash() {
  **/
 function setHighscoreCookie() {
 
-
     //read cookie
     var highscores = readCookie("jnr-hscrs");
 
     //if cookie exists read out values and fill in the updated values
     if (highscores != null) {
 
+        //convert the raw values to an array
         var highScoresArray = highscores.split(",");
 
+        //get the current score from the canvas
         var scoreDigits = score.text.match(/\d+/)[0];
 
+        //add new score to array
         highScoresArray.push(scoreDigits);
 
-
+        //sort the array
         highScoresArray.sort(sortNumber);
 
+        //remove the lowest entry
         highScoresArray.splice(3, 1);
 
-
-        console.log(highScoresArray);
-
-
+        //set the cookie with the new values
         createCookie("jnr-hscrs", highScoresArray[0] + "," + highScoresArray[1] + "," + highScoresArray[2], 1000)
-
-
     } else {
         createCookie("jnr-hscrs", "0,0,0", 1000);
     }
 }
-
-
-
-
-
-
