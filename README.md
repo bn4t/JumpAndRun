@@ -17,7 +17,6 @@
 ---
 ## TODO:
 - [ ] Fix weird jumping glitch
-- [ ] sounds
 
 ---
 
