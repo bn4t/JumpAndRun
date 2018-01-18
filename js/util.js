@@ -1,4 +1,4 @@
-var BASE_URL = "https://apply55gx.github.io/Runner/";
+var BASE_URL = "https://bn4t.github.io/Runner/";
 
 function redirectToGame() {
     createCookie("jnr-name", name, 1);
