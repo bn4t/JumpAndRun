@@ -188,13 +188,10 @@ function updateCube() {
     //checks if pressed key is the space key
     if (gameArea.key === 32) {
 
-        var passedTime = date.getTime() - lastTime;
-
         if (onGround) {
             onGround = false;
             applyGravity();
             lastTime = date.getTime();
-            allowDoubleJump = true;
         }
     } else if (!gameArea.key) {
         //decelerate
@@ -212,6 +209,7 @@ function applyGravity() {
 
     setTimeout(function () {
         gameArea.key = false;
+        console.log("decelerate!!");
     }, 150);
 }
 
