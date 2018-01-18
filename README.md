@@ -11,7 +11,7 @@
 - Highscore (playername)
 - ~~ev. Story~~
 - horizontal movement (left-to-right)
-- background sounds/music
+- ~~background sounds/music~~
 - bouncing
 
 ---
