@@ -61,6 +61,7 @@ var gameArea = {
         //register KeyDown listener
         window.addEventListener('keydown', function (e) {
             gameArea.key = e.keyCode;
+            e.preventDefault();
         });
 
         //register KeyUp listener
