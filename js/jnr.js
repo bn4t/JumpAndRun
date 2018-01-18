@@ -188,30 +188,17 @@ function updateCube() {
     //checks if pressed key is the space key
     if (gameArea.key === 32) {
 
-        if (onGround) {
-            console.log("onground");
+        if (onGround && ((date.getTime() - lastTime) > 1000)) {
+
             onGround = false;
-            applyGravity();
+            //accelerate
+            accelerate(-1);
             lastTime = date.getTime();
         }
     } else if (!gameArea.key) {
         //decelerate
         accelerate(0.4);
     }
-}
-
-/**
- * Applies gravity to the cube
- **/
-function applyGravity() {
-
-    //accelerate
-    accelerate(-1);
-
-
-    setTimeout(function () {
-        gameArea.key = false;
-    }, 150);
 }
 
 
@@ -312,7 +299,14 @@ function everyInterval(n) {
  * @param newGravity amount of gravity to be set
  **/
 function accelerate(newGravity) {
+
     gameComponent.gravity = newGravity;
+
+    if (newGravity < 0) {
+        setTimeout(function () {
+            gameComponent.gravity = 0.4;
+        }, 150);
+    }
 }
 
 /**
