@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jump 'n' Run</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/custom-css.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+</head>
+<body onLoad="start();">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#caff99;">
+        <a class="navbar-brand bungee-font" href="#" onclick="redirectToHome()">Jump 'n' Run</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToHome()">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToHighscores()">Highscores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToAbout()">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container">
+    <canvas id="playground"></canvas>
+</div>
+
+
+<div class="footer" style="background-color:#caff99;">
+    <p class="footer-text">Projekt YAASSS!</p>
+</div>
+
+<script src="../js/jnr.js"></script>
+<script src="../js/util.js"></script>
+
+
+</body>
+</html>
+

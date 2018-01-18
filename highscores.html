@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jump 'n' Run</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom-css.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+</head>
+<body onLoad="retrieveHighscores();">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#caff99;">
+        <a class="navbar-brand bungee-font" href="#" onclick="redirectToHome()">Jump 'n' Run</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToHome()">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToHighscores()">Highscores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="redirectToAbout()">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container">
+
+    <h1 class="bungee-font">Highscores</h1>
+
+    <p>1 => <a id="hscore1"></a></p>
+    <p>2 => <a id="hscore2"></a></p>
+    <p>3 => <a id="hscore3"></a></p>
+
+
+</div>
+
+
+<div class="footer" style="background-color:#caff99;">
+
+    <p class="footer-text">-</p>
+
+</div>
+
+
+<script>
+
+    function retrieveHighscores() {
+        var highscores = readCookie("jnr-hscrs");
+
+        if (highscores != null) {
+            var highScoresArray = highscores.split(",");
+
+
+            for (i = 0; i < 3; i++) {
+
+                if (highScoresArray[i] != null) {
+                    document.getElementById("hscore" + (i + 1)).innerHTML = highScoresArray[i];
+                } else {
+                    document.getElementById("hscore" + (i + 1)).innerHTML = "Unknown";
+                }
+            }
+
+
+        } else {
+            for (var i = 0; i < 3; i++) {
+                document.getElementById("hscore" + (i + 1)).innerHTML = "Unknown";
+            }
+        }
+
+
+
+    }
+
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+</script>
+
+<script src="js/util.js"></script>
+
+</body>
+</html>
