@@ -12,7 +12,12 @@ body {
     margin-bottom: 60px;
 }
 
-
+.center-btn {
+    text-align: center;
+!important;
+    margin: auto;
+!important;
+}
 
 .custom-btn {
     margin: 10px;
@@ -20,7 +25,7 @@ body {
 
 .container {
     text-align: center;
-    margin: 70px auto auto;
+    margin: 30px auto auto;
     width: auto;
 }
 
