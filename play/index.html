@@ -6,7 +6,12 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom-css.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+
+
 </head>
+
+
 <body onLoad="start();">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#caff99;">
@@ -34,13 +39,24 @@
 
 
 <div class="container">
+    <button type="button" id="restartButton" class="btn btn-md btn-dark center-btn" onclick="redirectToGame()">Play
+        again
+    </button>
+    <br>
+    <br>
     <canvas id="playground"></canvas>
+    <br>
+    <br>
 </div>
 
 
 <div class="footer" style="background-color:#caff99;">
     <p class="footer-text">Projekt YAASSS!</p>
 </div>
+
+<script>
+    $("#restartButton").hide();
+</script>
 
 <script src="../js/jnr.js"></script>
 <script src="../js/util.js"></script>

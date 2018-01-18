@@ -343,6 +343,9 @@ function crash() {
         ctx.font = "40px Bungee";
         ctx.fillText(score.text, canvas.width / 2, canvas.height / 2 + 70);
     };
+
+    $("#restartButton").show();
+
     setHighscoreCookie();
 }
 
