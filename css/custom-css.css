@@ -5,9 +5,10 @@ html {
 
 body {
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: auto;
     height: 100%;
     min-height: 100%;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizeSpeed;
     /* Margin bottom by footer height */
     margin-bottom: 60px;
 }
