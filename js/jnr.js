@@ -189,6 +189,7 @@ function updateCube() {
     if (gameArea.key === 32) {
 
         if (onGround) {
+            console.log("onground");
             onGround = false;
             applyGravity();
             lastTime = date.getTime();
@@ -206,12 +207,10 @@ function applyGravity() {
 
     //accelerate
     accelerate(-1);
-    console.log("accelerate!!");
 
 
     setTimeout(function () {
         gameArea.key = false;
-        console.log("decelerate!!");
     }, 150);
 }
 
