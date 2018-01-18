@@ -206,6 +206,8 @@ function applyGravity() {
 
     //accelerate
     accelerate(-1);
+    console.log("accelerate!!");
+
 
     setTimeout(function () {
         gameArea.key = false;
