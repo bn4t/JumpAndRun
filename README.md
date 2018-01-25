@@ -11,7 +11,7 @@
 - Highscore (playername)
 - ~~ev. Story~~
 - horizontal movement (left-to-right)
-- bouncing
+- ~~bouncing~~
 
 ---
 ## TODO:
