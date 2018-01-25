@@ -16,7 +16,7 @@
 
 ---
 ## TODO:
-- [ ] Fix weird jumping glitch
+- [X] Fix weird jumping glitch
 
 ---
 
