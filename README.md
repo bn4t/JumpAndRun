@@ -7,16 +7,15 @@
 - Fixed camera angle
 - ~~Coins~~
 - ~~Multiple characters~~
-- Start menu / End Screen / Game Over screen 
+- Start menu / Game Over screen 
 - Highscore (playername)
 - ~~ev. Story~~
 - horizontal movement (left-to-right)
-- background sounds/music
-- bouncing
+- ~~bouncing~~
 
 ---
 ## TODO:
-- [ ] Fix weird jumping glitch
+- [X] Fix weird jumping glitch
 
 ---
 
