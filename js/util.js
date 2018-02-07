@@ -1,16 +1,11 @@
-var BASE_URL = "https://bn4t.github.io/Runner/";
+var BASE_URL = "https://bn4t.github.io/JumpAndRun/";
 
 function redirectToGame() {
-    createCookie("jnr-name", name, 1);
     window.location = BASE_URL + "play/";
 }
 
 function redirectToHome() {
     window.location = BASE_URL;
-}
-
-function redirectToAbout() {
-    window.location = BASE_URL + "about.html";
 }
 
 function redirectToHighscores() {
